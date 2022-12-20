@@ -74,7 +74,7 @@ void RunMotion(){            //Hareketi başlatır
     stepperX.moveTo(homepos);
     stepeprX.runToPosition()
     stepperX.moveTo(endpos);
-    stepeprX.runToPosition()
+    stepeprX.runToPosition();
   }
 }
 
