@@ -11,8 +11,10 @@ int buttonInputSOL = 3;                     //Sol buton pini
 int buttonInputSTART = 4;                   //Start buton pini
 int buttonInputSTOP = 5;                    //Stop buton pini
 int buttonInputRESET = 6;                   //Reset buton pini
+int buttonInputHOME = 6;                   //Reset buton pini
+int buttonInputEND = 6;                   //Reset buton pini
 bool state = false;                         //Motion başladı mı başlamadı mı kontrolü
-
+int endpos;
 
 void setup(){
   
@@ -31,15 +33,18 @@ void loop(){
   
 }
 
-void ResetMotion(){            //Hareketi hafızadan siler
-  if(state == true){
-    memset(motion, 0, sizeof(motion));
-    state = false;
+void Home(){
+  if(buttonInputHOME == HIGH){
+    stepperX.setCurrentPosition(0)
   }
 }
+void End(){
+  if(buttonInputEND == HIGH){
+    endpos = stepperX.currentPosition()
+  }
 
 
-
+}
 void OneStepR(){               //Sağa doğru bir adım motoru sürer
   stepperX.moveTo(10);
   stepperX.runToPosition();
@@ -68,8 +73,6 @@ void RunMotion(){            //Hareketi başlatır
     stepperX.runToPosition();
   }
 }
-
-
 
 
 
