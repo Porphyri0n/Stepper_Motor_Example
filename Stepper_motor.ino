@@ -15,6 +15,7 @@ int buttonInputHOME = 6;                   //Reset buton pini
 int buttonInputEND = 6;                   //Reset buton pini
 bool state = false;                         //Motion başladı mı başlamadı mı kontrolü
 int endpos;
+int homepos;
 
 void setup(){
   
@@ -29,18 +30,19 @@ void setup(){
 
 }
 void loop(){
-
-  
+  Home();
+  End();
+  Runmotion();
 }
 
 void Home(){
   if(buttonInputHOME == HIGH){
-    stepperX.setCurrentPosition(0)
+    homepos = stepperX.setCurrentPosition(0);
   }
 }
 void End(){
   if(buttonInputEND == HIGH){
-    endpos = stepperX.currentPosition()
+    endpos = stepperX.currentPosition();
   }
 
 
@@ -68,9 +70,11 @@ void MotionSave(){             //Hareketi kaydeder
 }
 
 void RunMotion(){            //Hareketi başlatır
-  for(int counter = 0; counter < int(sizeof(motion)); counter++){
-    stepperX.moveTo(motion[counter]);
-    stepperX.runToPosition();
+  if(buttonInputSTART == HIGH){
+    stepperX.moveTo(homepos);
+    stepeprX.runToPosition()
+    stepperX.moveTo(endpos);
+    stepeprX.runToPosition()
   }
 }
 
