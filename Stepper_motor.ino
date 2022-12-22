@@ -1,91 +1,100 @@
 #include<AccelStepper.h>                    //kütüphane
 
-AccelStepper stepperX(1,8,9);               //X motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
-AccelStepper stepperY(1,10,11);             //Y motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
+AccelStepper stepperX(2000,9,10,11,12);               //X motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
+//AccelStepper stepperY(1,10,11);             //Y motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
 int motion[] = {};
 
 int sensor1Val;                             //Eklenecek sensörlerden birinin input değeri
 int sensor2Val;                             //Eklenecek sensörlerden birinin input değeri
 int buttonInputSAG = 2;                     //Sağ buton pini
 int buttonInputSOL = 3;                     //Sol buton pini
-int buttonInputSTART = 4;                   //Start buton pini
-int buttonInputSTOP = 5;                    //Stop buton pini
-int buttonInputRESET = 6;                   //Reset buton pini
-int buttonInputHOME = 7;                   //Reset buton pini
-int buttonInputEND = 12;                   //Reset buton pini
-int buttonInputToHome = 13;                   //Reset buton pini
+int buttonInputSTART = 4;                   //Start buton pini               
+int buttonInputRESET = 5;                   //Reset buton pini
+int buttonInputHOME = 6;                    //Home buton pini
+int buttonInputEND = 7;                     //End buton pini
+//int buttonInputToHome = 13;               //To home buton pini
+//int buttonInputToEnd = 13;                //To End buton pini
 bool state = false;                         //Motion başladı mı başlamadı mı kontrolü
 int endpos;
 int homepos = 0;
 
 void setup(){
+  pinMode(buttonInputSAG,INPUT);
+  pinMode(buttonInputSOL,INPUT);
+  pinMode(buttonInputSTART,INPUT);
+  pinMode(buttonInputRESET,INPUT);
+  pinMode(buttonInputHOME,INPUT);
+  pinMode(buttonInputEND,INPUT);
   
   //X Motoru
-  stepperX.setMaxSpeed(1000);               //Motor kurulumu
+  Serial.println("Motor Testi");            //Motor testi
+  stepperX.setMaxSpeed(1000);               
   stepperX.setAcceleration(1000);
   stepperX.disableOutputs();
 
   //Y Motoru
-  stepperY.setMaxSpeed(1000);
+  //stepperY.setMaxSpeed(1000);
 
 
 }
 void loop(){
-  Home();
-  End();
-  RunMotion();
+  if(state == false){
+    stepperX.enableOutputs();
+    Right();
+    Left();
+    stepperX.run();
+    Home();
+    End();
+  }
+  else{
+    Motion();
+  }
+  if(digitalRead(buttonInputSTART)==HIGH){
+    state = true;
+    delay(300);
+  }
+
+  stepperX.run();
 }
 
+
+void Right(){
+  if(digitalRead(buttonInputSAG) == HIGH){
+  stepperX.moveTo(1);
+  }
+}
+
+void Left(){
+  if(digitalRead(buttonInputSAG) == HIGH){
+  stepperX.moveTo(-1);
+  }
+  
+}
 void Home(){
-  if(buttonInputHOME == HIGH){
+  if(digitalRead(buttonInputHOME)==HIGH){
     stepperX.setCurrentPosition(0);
   }
 }
+
 void End(){
-  if(buttonInputEND == HIGH){
+  if(digitalRead(buttonInputEND)==HIGH){
     endpos = stepperX.currentPosition();
   }
-
-
+  
 }
-void OneStepR(){               //Sağa doğru bir adım motoru sürer
-  stepperX.moveTo(10);
-  stepperX.runToPosition();
-}
-
-void OneStepL(){               //Sola doğru bir adım motoru sürer
-  stepperX.moveTo(-10);
-  stepperX.runToPosition();
+void Motion(){
+    while (stepperX.currentPosition() != 0){
+      stepperX.moveTo(0);
+    }
+    while (stepperX.currentPosition() != endpos){
+      stepperX.moveTo(endpos);
+    }
 }
 
-void MotionSave(){             //Hareketi kaydeder
-  if (digitalRead(buttonInputSAG) == HIGH){
-    OneStepR();
-    motion[sizeof(motion)] = 10;
-  }
-
-  else if (digitalRead(buttonInputSOL)==HIGH){
-    OneStepL();
-    motion[sizeof(motion)+1] = -10;
-  }
+void Reset(){
+  state = false;
+  stepperX.disableOutputs();
 }
-
-void RunMotion(){            //Hareketi başlatır
-  if(buttonInputSTART == HIGH){
-    stepperX.moveTo(homepos);
-    stepeprX.runToPosition()
-    stepperX.moveTo(endpos);
-    stepeprX.runToPosition();
-  }
-}
-
-void ToHome(){
-  if(buttonInputToHome == HIGH){
-    stepperX.runToNewPosition(homepos);
-  }
-}
-
-
 
 
 
