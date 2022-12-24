@@ -68,15 +68,23 @@ void loop(){
     Home();
     End();
   }
+
   else{
     Serial.println("Motion modu");
     Motion();
   }
+
   if(digitalRead(buttonInputSTART)==HIGH){
     Serial.println("Motion moduna gecildi");
     state = true;
     delay(300);
   }
+
+  if(digitalRead(buttonInputRESET)==HIGH){
+    Serial.println("Program bastan baslatiliyor");
+    Reset();
+    delay(300);
+    }
 
 
 }
