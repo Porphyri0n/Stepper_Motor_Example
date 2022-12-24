@@ -9,9 +9,9 @@
 
 //Y motorunun pinleri
 //#define HALFSTEPY 8
-//#define motorYPin4 12
-//#define motorYPin4 12
-//#define motorYPin4 12
+//#define motorYPin1 12
+//#define motorYPin2 12
+//#define motorYPin3 12
 //#define motorYPin4 12
 
 
