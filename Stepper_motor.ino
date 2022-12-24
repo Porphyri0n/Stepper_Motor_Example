@@ -1,17 +1,22 @@
-#include<AccelStepper.h>                    //kütüphane
-#define HALFSTEP 8
+#include<AccelStepper.h>                   //kütüphane
+
+//X motorunun pinleri ve adım ölçeği
+#define HALFSTEPX 8
 #define motorXPin1 9
 #define motorXPin2 10
 #define motorXPin3 11
 #define motorXPin4 12
+
+//Y motorunun pinleri
+//#define HALFSTEPY 8
 //#define motorYPin4 12
 //#define motorYPin4 12
 //#define motorYPin4 12
 //#define motorYPin4 12
 
 
-AccelStepper stepperX(HALFSTEP,motorXPin1,motorXPin2,motorXPin3,motorXPin4);               //X motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
-//AccelStepper stepperY(HALFSTEP,motorYPin1,motorYPin2,motorYPin3,motorYPin4);               //Y motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
+AccelStepper stepperX(HALFSTEPX,motorXPin1,motorXPin2,motorXPin3,motorXPin4);               //X motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
+//AccelStepper stepperY(HALFSTEPY,motorYPin1,motorYPin2,motorYPin3,motorYPin4);               //Y motorunun kurulumu(Sürücüye göre parantez içi değerleri değişecek)
 int motion[] = {};
 
 int sensor1Val;                             //Eklenecek sensörlerden birinin input değeri
@@ -61,7 +66,7 @@ void loop(){
     Motion();
   }
   if(digitalRead(buttonInputSTART)==HIGH){
-    Serial.println("Motion moduna geçildi");
+    Serial.println("Motion moduna gecildi");
     state = true;
     delay(300);
   }
@@ -98,10 +103,10 @@ void End(){
 }
 //Kaydedilen konumlar üzerinden hareketi başlatma
 void Motion(){
-    while (stepperX.currentPosition() != 0){
+    while (stepperX.currentPosition() != 0 || stepperX.distanceToGo() == 0){
       stepperX.moveTo(0);
     }
-    while (stepperX.currentPosition() != endpos){
+    while (stepperX.currentPosition() != endpos || stepperX.distanceToGo() == 0){
       stepperX.moveTo(endpos);
     }
 }
