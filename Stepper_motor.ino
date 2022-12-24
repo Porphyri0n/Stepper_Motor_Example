@@ -46,6 +46,8 @@ void setup(){
   Serial.println("Motor Testi");            //Motor testi
   stepperX.setMaxSpeed(1000);               
   stepperX.setAcceleration(1000);
+  stepperX.moveTo(homepos);
+  
 
   //Y Motoru
   //stepperY.setMaxSpeed(1000);
