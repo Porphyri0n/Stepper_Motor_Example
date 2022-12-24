@@ -9,9 +9,9 @@
 
 //Y motorunun pinleri
 //#define HALFSTEPY 8
-//#define motorYPin1 12
-//#define motorYPin2 12
-//#define motorYPin3 12
+//#define motorYPin4 12
+//#define motorYPin4 12
+//#define motorYPin4 12
 //#define motorYPin4 12
 
 
@@ -46,7 +46,12 @@ void setup(){
   Serial.println("Motor Testi");            //Motor testi
   stepperX.setMaxSpeed(1000);               
   stepperX.setAcceleration(1000);
+
+  Serial.println("Deneme baslatiliyor");
   stepperX.moveTo(homepos);
+  stepperX.run();
+  stepperX.moveTo(endpos);
+  stepperX.run();
   
 
   //Y Motoru
@@ -73,7 +78,6 @@ void loop(){
     delay(300);
   }
 
-  stepperX.run();
 
 }
 
@@ -107,10 +111,13 @@ void End(){
 void Motion(){
     while (stepperX.currentPosition() != 0 || stepperX.distanceToGo() == 0){
       stepperX.moveTo(0);
+      stepperX.run();
     }
     while (stepperX.currentPosition() != endpos || stepperX.distanceToGo() == 0){
       stepperX.moveTo(endpos);
+      stepperX.run();
     }
+
 }
 
 //Programı başa alma
