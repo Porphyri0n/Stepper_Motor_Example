@@ -74,6 +74,8 @@ void loop(){
   else{
     Serial.print("Motion modu, StepperX'in anlık konumu: ");
     Serial.println(stepperX.currentPosition());
+    Serial.print("Motion modu, StepperX'in gitmesi gereken konum: ");
+    Serial.println(stepperX.distanceToGo());
     if (stepperX.distanceToGo() == 0)
    {
      stepperX.setCurrentPosition(0);
