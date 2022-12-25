@@ -79,7 +79,7 @@ void loop(){
     stepperX.setSpeed(1000);
     if (stepperX.distanceToGo() == 0)
    {
-     stepperX.setCurrentPosition(0);
+     
      endpos = -endpos;
      stepperX.moveTo(endpos);
    }
