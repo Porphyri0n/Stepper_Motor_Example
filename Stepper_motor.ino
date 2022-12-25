@@ -3,8 +3,8 @@
 //X motorunun pinleri ve adım ölçeği
 #define HALFSTEPX 8
 #define motorXPin1 9
-#define motorXPin2 10
-#define motorXPin3 11
+#define motorXPin2 11
+#define motorXPin3 10
 #define motorXPin4 12
 
 //Y motorunun pinleri
@@ -76,13 +76,11 @@ void loop(){
     Serial.println(stepperX.currentPosition());
     Serial.print("Motion modu, StepperX'in gitmesi gereken konum: ");
     Serial.println(stepperX.distanceToGo());
+    stepperX.setSpeed(1000);
     
-    if (stepperX.distanceToGo() == 0)
-   {
      
-     endpos = -endpos;
+    
      stepperX.moveTo(endpos);
-   }
     stepperX.run();
   }
 
