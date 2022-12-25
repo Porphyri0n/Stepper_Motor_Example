@@ -72,9 +72,15 @@ void loop(){
   }
 
   else{
-    Serial.println("Motion modu, StepperX'in anlık konumu: ");
+    Serial.print("Motion modu, StepperX'in anlık konumu: ");
     Serial.println(stepperX.currentPosition());
-    Motion();
+    if (stepperX.distanceToGo() == 0)
+   {
+     stepperX.setCurrentPosition(0);
+     endpos = -endpos;
+     stepperX.moveTo(endpos);
+   }
+    stepperX.run();
   }
 
   if(digitalRead(buttonInputSTART)==HIGH){
