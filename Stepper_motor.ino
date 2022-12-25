@@ -32,6 +32,7 @@ int buttonInputEND = 7;                     //End buton pini
 bool state = false;                         //Motion başladı mı başlamadı mı kontrolü
 int endpos = 1000;
 int homepos = 0;
+int counter = 0;
 
 void setup(){
   Serial.begin(9600);
@@ -109,7 +110,7 @@ void Direction(){
 void Home(){
   if(digitalRead(buttonInputHOME)==HIGH){
     Serial.print("home pozisyonu ayarlandı StepperX'in anlık konumu: ");
-    Serial.println(stepperX.currentPosition());
+    Serial.println(stepperX.currentPosition());    
     stepperX.setCurrentPosition(homepos);
   }
 }
@@ -125,11 +126,19 @@ void End(){
 //Kaydedilen konumlar üzerinden hareketi başlatma
 void Motion(){
 
-    stepperX.moveTo(0);
-    stepperX.run();
-    
-    stepperX.moveTo(endpos);
-    stepperX.run();
+    if (stepperX.distanceToGo() == 0)
+   {
+     if (counter%2 == 1){
+       stepperX.moveTo(homepos);
+       counter+=1;
+     }
+     else{
+       stepperX.moveTo(endpos);
+       counter+=1;
+     }
+     
+   }
+   stepperX.run();
 
 }
 
