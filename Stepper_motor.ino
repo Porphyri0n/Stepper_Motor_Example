@@ -61,7 +61,8 @@ void setup(){
 }
 void loop(){
   if(state == false){
-    Serial.println("Kayit Modu");
+    Serial.print("Kayit Modu, StepperX'in anlık konumu: ");
+    Serial.println(stepperX.currentPosition());
     Direction();
     stepperX.enableOutputs();
     stepperX.runSpeed();
@@ -70,7 +71,8 @@ void loop(){
   }
 
   else{
-    Serial.println("Motion modu");
+    Serial.println("Motion modu, StepperX'in anlık konumu: ");
+    Serial.println(stepperX.currentPosition());
     Motion();
   }
 
@@ -85,6 +87,7 @@ void loop(){
     Reset();
     delay(300);
     }
+  delay(100);
 
 
 }
@@ -105,12 +108,16 @@ void Direction(){
 //Home pozisyonu ayarlama
 void Home(){
   if(digitalRead(buttonInputHOME)==HIGH){
+    Serial.print("home pozisyonu ayarlandı StepperX'in anlık konumu: ");
+    Serial.println(stepperX.currentPosition());
     stepperX.setCurrentPosition(homepos);
   }
 }
 //End pozisyonu ayarlama
 void End(){
   if(digitalRead(buttonInputEND)==HIGH){
+    Serial.print("end pozisyonu ayarlandı StepperX'in anlık konumu: ");
+    Serial.println(stepperX.currentPosition());
     endpos = stepperX.currentPosition();
   }
   
