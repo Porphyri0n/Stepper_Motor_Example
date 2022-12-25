@@ -117,14 +117,12 @@ void End(){
 }
 //Kaydedilen konumlar üzerinden hareketi başlatma
 void Motion(){
-    while (stepperX.currentPosition() != 0 || stepperX.distanceToGo() == 0){
-      stepperX.moveTo(0);
-      stepperX.run();
-    }
-    while (stepperX.currentPosition() != endpos || stepperX.distanceToGo() == 0){
-      stepperX.moveTo(endpos);
-      stepperX.run();
-    }
+
+    stepperX.moveTo(0);
+    stepperX.run();
+    
+    stepperX.moveTo(endpos);
+    stepperX.run();
 
 }
 
