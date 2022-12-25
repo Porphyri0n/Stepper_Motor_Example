@@ -3,8 +3,8 @@
 //X motorunun pinleri ve adım ölçeği
 #define HALFSTEPX 8
 #define motorXPin1 9
-#define motorXPin2 11
-#define motorXPin3 10
+#define motorXPin2 10
+#define motorXPin3 11
 #define motorXPin4 12
 
 //Y motorunun pinleri
